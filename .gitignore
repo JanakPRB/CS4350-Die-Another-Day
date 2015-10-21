@@ -43,3 +43,4 @@ Temporary Items
 .apdisk
 Content/Maps/Island.umap
 ShooterGame.sdf
+Intermediate/Build/Win64/UE4Editor/Development/ShooterGame/ShooterGame.h.pch
