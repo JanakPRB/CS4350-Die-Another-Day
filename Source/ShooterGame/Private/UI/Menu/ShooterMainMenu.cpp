@@ -19,7 +19,7 @@
 
 #define LOCTEXT_NAMESPACE "ShooterGame.HUD.Menu"
 
-#define MAX_BOT_COUNT 8
+#define MAX_BOT_COUNT 56
 
 static const FString MapNames[] = { TEXT("Island") };
 static const FString JoinMapNames[] = { TEXT("Any"), TEXT("Island")};
