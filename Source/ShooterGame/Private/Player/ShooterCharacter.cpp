@@ -841,6 +841,9 @@ void AShooterCharacter::SetupPlayerInputComponent(class UInputComponent* InputCo
 	InputComponent->BindAction("Jump", IE_Pressed, this, &AShooterCharacter::OnStartJump);
 	InputComponent->BindAction("Jump", IE_Released, this, &AShooterCharacter::OnStopJump);
 
+	InputComponent->BindAction("Crouch", IE_Pressed, this, &AShooterCharacter::OnStartCrouch);
+	InputComponent->BindAction("Crouch", IE_Released, this, &AShooterCharacter::OnStopCrouch);
+
 	InputComponent->BindAction("Run", IE_Pressed, this, &AShooterCharacter::OnStartRunning);
 	InputComponent->BindAction("RunToggle", IE_Pressed, this, &AShooterCharacter::OnStartRunningToggle);
 	InputComponent->BindAction("Run", IE_Released, this, &AShooterCharacter::OnStopRunning);
@@ -1068,6 +1071,20 @@ void AShooterCharacter::OnStartJump()
 void AShooterCharacter::OnStopJump()
 {
 	bPressedJump = false;
+}
+
+void AShooterCharacter::OnStartCrouch()
+{
+	AShooterPlayerController* MyPC = Cast<AShooterPlayerController>(Controller);
+	if (MyPC && MyPC->IsGameInputAllowed())
+	{
+		bIsCrouched = true;
+	}
+}
+
+void AShooterCharacter::OnStopCrouch()
+{
+	bIsCrouched = false;
 }
 
 //////////////////////////////////////////////////////////////////////////

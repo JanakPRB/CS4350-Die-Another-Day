@@ -1823,5 +1823,5 @@ void UShooterGameInstance::BeginHostingQuickMatch()
 	GotoState(ShooterGameInstanceState::Playing);
 
 	// Travel to the specified match URL
-	GetWorld()->ServerTravel(TEXT("/Game/Maps/Highrise?game=TDM?listen"));	
+	GetWorld()->ServerTravel(TEXT("/Game/Maps/Island?game=TDM?listen"));	
 }
