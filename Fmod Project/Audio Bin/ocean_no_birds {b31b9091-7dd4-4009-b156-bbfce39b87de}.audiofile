@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.05.00">
+    <object class="AudioFile" id="{b31b9091-7dd4-4009-b156-bbfce39b87de}">
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>310.54367346938773</value>
+        </property>
+        <property name="audioFilePath">
+            <value>$(AUDIO_BIN_DIR)/ocean_no_birds {80227237-32a1-40c0-b0be-e2b75d60a623}.mp3</value>
+        </property>
+        <relationship name="container">
+            <destination>{7030a1b7-46b7-4744-852b-6a57e8981ba9}</destination>
+        </relationship>
+    </object>
+</objects>
