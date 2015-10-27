@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.05.00">
+    <object class="AudioFile" id="{fb7e4f6b-d1f4-431b-86e8-1414b31995ee}">
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>3.9437868480725622</value>
+        </property>
+        <property name="audioFilePath">
+            <value>$(AUDIO_BIN_DIR)/birds3 {ae0751b8-ba11-40fd-bb9a-00cd9d97c0ad}.wav</value>
+        </property>
+        <relationship name="container">
+            <destination>{7030a1b7-46b7-4744-852b-6a57e8981ba9}</destination>
+        </relationship>
+    </object>
+</objects>

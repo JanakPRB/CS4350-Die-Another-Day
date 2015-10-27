@@ -43,8 +43,7 @@ Temporary Items
 .apdisk
 Content/Maps/Island.umap
 ShooterGame.sdf
-Intermediate/Build/Win64/UE4Editor/Development/ShooterGame/ShooterGame.h.pch
-Binaries/Win64/ShooterGame.pdb
+Binaries/
 DerivedDataCache/Compressed.ddp
 Saved/Autosaves/
 Saved/Backup/
@@ -53,4 +52,5 @@ Saved/Cooked/
 Saved/Logs/
 Saved/StagedBuilds/
 Saved/Stats/
+Intermediate/
 Build/

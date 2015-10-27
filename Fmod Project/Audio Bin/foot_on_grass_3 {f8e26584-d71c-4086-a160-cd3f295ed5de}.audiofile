@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.05.00">
+    <object class="AudioFile" id="{f8e26584-d71c-4086-a160-cd3f295ed5de}">
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>0.91605442176870744</value>
+        </property>
+        <property name="audioFilePath">
+            <value>$(AUDIO_BIN_DIR)/foot_on_grass_3 {a3c1fbe5-90fe-4681-bc6b-954980810a8a}.wav</value>
+        </property>
+        <relationship name="container">
+            <destination>{7030a1b7-46b7-4744-852b-6a57e8981ba9}</destination>
+        </relationship>
+    </object>
+</objects>
