@@ -115,11 +115,11 @@ static struct FScriptStruct_ShooterGame_StaticRegisterNativesFDecalData
 		FNativeFunctionRegistrar::RegisterFunction(AShooterCharacter::StaticClass(),"ServerSetRunning",(Native)&AShooterCharacter::execServerSetRunning);
 		FNativeFunctionRegistrar::RegisterFunction(AShooterCharacter::StaticClass(),"ServerSetTargeting",(Native)&AShooterCharacter::execServerSetTargeting);
 	}
-	IMPLEMENT_CLASS(AShooterCharacter, 563713933);
+	IMPLEMENT_CLASS(AShooterCharacter, 1423121716);
 	void AShooterBot::StaticRegisterNativesAShooterBot()
 	{
 	}
-	IMPLEMENT_CLASS(AShooterBot, 2490879766);
+	IMPLEMENT_CLASS(AShooterBot, 1939405039);
 	void UShooterCharacterMovement::StaticRegisterNativesUShooterCharacterMovement()
 	{
 	}
@@ -1532,6 +1532,17 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				OuterClass->LinkChild(Z_Construct_UFunction_AShooterCharacter_ServerSetTargeting());
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+				CPP_BOOL_PROPERTY_BITMASK_STRUCT(isHungry, AShooterCharacter, bool);
+				UProperty* NewProp_isHungry = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("isHungry"), RF_Public|RF_Transient|RF_Native) UBoolProperty(FObjectInitializer(), EC_CppProperty, CPP_BOOL_PROPERTY_OFFSET(isHungry, AShooterCharacter), 0x0000000000000005, CPP_BOOL_PROPERTY_BITMASK(isHungry, AShooterCharacter), sizeof(bool), true);
+				UProperty* NewProp_StaminaRegenRate = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("StaminaRegenRate"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(StaminaRegenRate, AShooterCharacter), 0x0000000000000005);
+				UProperty* NewProp_StaminaReduceRate = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("StaminaReduceRate"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(StaminaReduceRate, AShooterCharacter), 0x0000000000000005);
+				UProperty* NewProp_HungerReduceRate = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("HungerReduceRate"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(HungerReduceRate, AShooterCharacter), 0x0000000000000005);
+				UProperty* NewProp_HPReduceRate = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("HPReduceRate"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(HPReduceRate, AShooterCharacter), 0x0000000000000005);
+				UProperty* NewProp_StaminaCurrent = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("StaminaCurrent"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(StaminaCurrent, AShooterCharacter), 0x0000000000000005);
+				UProperty* NewProp_StaminaMax = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("StaminaMax"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(StaminaMax, AShooterCharacter), 0x0000000000000005);
+				UProperty* NewProp_HungerCurrent = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("HungerCurrent"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(HungerCurrent, AShooterCharacter), 0x0000000000000005);
+				UProperty* NewProp_HungerMax = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("HungerMax"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(HungerMax, AShooterCharacter), 0x0000000000000005);
+				UProperty* NewProp_HPMax = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("HPMax"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(HPMax, AShooterCharacter), 0x0000000000000005);
 				UProperty* NewProp_Health = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("Health"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(Health, AShooterCharacter), 0x0000000000000025);
 				CPP_BOOL_PROPERTY_BITMASK_STRUCT(bIsDying, AShooterCharacter, uint8);
 				UProperty* NewProp_bIsDying = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("bIsDying"), RF_Public|RF_Transient|RF_Native) UBoolProperty(FObjectInitializer(), EC_CppProperty, CPP_BOOL_PROPERTY_OFFSET(bIsDying, AShooterCharacter), 0x0000000000020015, CPP_BOOL_PROPERTY_BITMASK(bIsDying, AShooterCharacter), sizeof(uint8), false);
@@ -1583,6 +1594,28 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				MetaData->SetValue(OuterClass, TEXT("HideCategories"), TEXT("Navigation"));
 				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("Player/ShooterCharacter.h"));
 				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_isHungry, TEXT("Category"), TEXT("Core Mechanism"));
+				MetaData->SetValue(NewProp_isHungry, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_StaminaRegenRate, TEXT("Category"), TEXT("Core Mechanism"));
+				MetaData->SetValue(NewProp_StaminaRegenRate, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_StaminaReduceRate, TEXT("Category"), TEXT("Core Mechanism"));
+				MetaData->SetValue(NewProp_StaminaReduceRate, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_HungerReduceRate, TEXT("Category"), TEXT("Core Mechanism"));
+				MetaData->SetValue(NewProp_HungerReduceRate, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_HPReduceRate, TEXT("Category"), TEXT("Core Mechanism"));
+				MetaData->SetValue(NewProp_HPReduceRate, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_StaminaCurrent, TEXT("Category"), TEXT("Core Mechanism"));
+				MetaData->SetValue(NewProp_StaminaCurrent, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_StaminaMax, TEXT("Category"), TEXT("Core Mechanism"));
+				MetaData->SetValue(NewProp_StaminaMax, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_HungerCurrent, TEXT("Category"), TEXT("Core Mechanism"));
+				MetaData->SetValue(NewProp_HungerCurrent, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_HungerMax, TEXT("Category"), TEXT("Core Mechanism"));
+				MetaData->SetValue(NewProp_HungerMax, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_HungerMax, TEXT("ToolTip"), TEXT("UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Core Mechanism\")\nfloat HPCurrent;"));
+				MetaData->SetValue(NewProp_HPMax, TEXT("Category"), TEXT("Core Mechanism"));
+				MetaData->SetValue(NewProp_HPMax, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_HPMax, TEXT("ToolTip"), TEXT("The core game mechanism *"));
 				MetaData->SetValue(NewProp_Health, TEXT("Category"), TEXT("Health"));
 				MetaData->SetValue(NewProp_Health, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
 				MetaData->SetValue(NewProp_Health, TEXT("ToolTip"), TEXT("Current health of the Pawn"));
@@ -4898,7 +4931,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/ShooterGame")), false, false));
 			ReturnPackage->PackageFlags |= PKG_CompiledIn | 0x00000000;
 			FGuid Guid;
-			Guid.A = 0x4A0CFA24;
+			Guid.A = 0x89FDF855;
 			Guid.B = 0xF3DF35AF;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;

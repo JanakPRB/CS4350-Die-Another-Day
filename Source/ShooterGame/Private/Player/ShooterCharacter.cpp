@@ -59,15 +59,14 @@ void AShooterCharacter::PostInitializeComponents()
         // Default value
         HPMax = GetMaxHealth();
         HungerMax = 100.f;
-        HungerCurrent = 60.f;
+        HungerCurrent = 40.f;
         StaminaMax = 100.f;
         StaminaCurrent = 100.f;
-        HPReduceRate = 0.5f;
-        HungerReduceRate = 0.1f;
+        HPReduceRate = 1.f;
+        HungerReduceRate = 1.f;
         StaminaReduceRate = 5.0f;
         StaminaRegenRate = 10.f;
         isHungry = false;
-        isRunning = false;
         
 		SpawnDefaultInventory();
 	}
@@ -999,6 +998,9 @@ void AShooterCharacter::OnStartRunning()
 			SetTargeting(false);
 		}
 		StopWeaponFire();
+        if (StaminaCurrent <= 0) {
+            return;
+        }
 		SetRunning(true, false);
 	}
 }
@@ -1052,6 +1054,48 @@ void AShooterCharacter::Tick(float DeltaSeconds)
 			}
 		}
 	}
+    
+    // if hungry, reduce HP, else ruduce hunger
+    if (HungerCurrent <= 0) {
+        isHungry = true;
+    } else {
+        isHungry = false;
+    }
+    
+    if (isHungry) {
+        Health -= DeltaSeconds * HPReduceRate;
+    }else{
+        HungerCurrent -= DeltaSeconds * HungerReduceRate;
+    }
+    
+    // if running, reduce stamina, else regenerate stamina
+    if (IsRunning()) {
+        if(StaminaCurrent > 0){
+            StaminaCurrent -= DeltaSeconds * StaminaReduceRate;
+        }
+    } else if(StaminaCurrent < StaminaMax){
+        StaminaCurrent += DeltaSeconds * StaminaRegenRate;
+    }
+    
+    // adjust value if excedes boundary
+    if (Health > HPMax) {
+        Health = HPMax;
+    }else if(Health < 0){
+        Health = 0;
+    }
+    
+    if (StaminaCurrent > StaminaMax) {
+        StaminaCurrent = StaminaMax;
+    }else if(StaminaCurrent < 0){
+        StaminaCurrent = 0;
+    }
+    
+    if (HungerCurrent > HungerMax) {
+        HungerCurrent = HungerMax;
+    }else if(HungerCurrent < 0){
+        HungerCurrent = 0;
+    }
+
 	
 	if (LowHealthSound && GEngine->UseSound())
 	{

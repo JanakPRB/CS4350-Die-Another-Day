@@ -385,8 +385,6 @@ public:
 	float Health;
     
     // Code of core mechanism from CS4350 Project
-    /** Tick **/
-    virtual void Tick(float DeltaSeconds) override;
     
     /** The core game mechanism **/
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
@@ -423,8 +421,8 @@ public:
     bool isHungry;
     FTimerHandle HungerReduceTimerHandle;
     
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
-    bool isRunning;
+    //UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    //bool isRunning;
     FTimerHandle StaminaReduceTimerHandle;
     FTimerHandle StaminaRegenTimerHandle;
 
