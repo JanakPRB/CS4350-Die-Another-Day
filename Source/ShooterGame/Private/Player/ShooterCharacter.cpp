@@ -54,6 +54,21 @@ void AShooterCharacter::PostInitializeComponents()
 	if (Role == ROLE_Authority)
 	{
 		Health = GetMaxHealth();
+        
+        // Core mechanism
+        // Default value
+        HPMax = GetMaxHealth();
+        HungerMax = 100.f;
+        HungerCurrent = 60.f;
+        StaminaMax = 100.f;
+        StaminaCurrent = 100.f;
+        HPReduceRate = 0.5f;
+        HungerReduceRate = 0.1f;
+        StaminaReduceRate = 5.0f;
+        StaminaRegenRate = 10.f;
+        isHungry = false;
+        isRunning = false;
+        
 		SpawnDefaultInventory();
 	}
 

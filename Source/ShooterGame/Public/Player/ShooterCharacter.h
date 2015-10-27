@@ -383,6 +383,52 @@ public:
 	// Current health of the Pawn
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category=Health)
 	float Health;
+    
+    // Code of core mechanism from CS4350 Project
+    /** Tick **/
+    virtual void Tick(float DeltaSeconds) override;
+    
+    /** The core game mechanism **/
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float HPMax;
+    
+    //UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    //float HPCurrent;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float HungerMax;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float HungerCurrent;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float StaminaMax;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float StaminaCurrent;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float HPReduceRate;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float HungerReduceRate;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float StaminaReduceRate;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float StaminaRegenRate;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    bool isHungry;
+    FTimerHandle HungerReduceTimerHandle;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    bool isRunning;
+    FTimerHandle StaminaReduceTimerHandle;
+    FTimerHandle StaminaRegenTimerHandle;
+
+    
 
 	/** Take damage, handle death */
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
