@@ -62,8 +62,8 @@ void AShooterCharacter::PostInitializeComponents()
         HungerCurrent = 40.f;
         StaminaMax = 100.f;
         StaminaCurrent = 100.f;
-        HPReduceRate = 10.f;
-        HungerReduceRate = 10.f;
+        HPReduceRate = 1.f;
+        HungerReduceRate = 1.f;
         StaminaReduceRate = 5.0f;
         StaminaRegenRate = 10.f;
         isHungry = false;
