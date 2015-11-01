@@ -174,12 +174,6 @@ class AShooterCharacter : public ACharacter
 	/** player released jump action */
 	void OnStopJump();
 
-	/** player pressed jump action */
-	void OnStartCrouch();
-
-	/** player released jump action */
-	void OnStopCrouch();
-
 	/** player pressed run action */
 	void OnStartRunning();
 
