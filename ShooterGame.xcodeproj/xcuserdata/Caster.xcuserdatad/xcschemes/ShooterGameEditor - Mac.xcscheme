@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "928F2E68AA842D060DD6CFDD"
+               BlueprintIdentifier = "18622FC434B7BB8CFCCEC277"
                BuildableName = "ShooterGameEditor - Mac"
                BlueprintName = "ShooterGameEditor - Mac"
                ReferencedContainer = "container:ShooterGame.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "14731C46AA6C22889327D60E"
+               BlueprintIdentifier = "F240FA5B37EED55BFC25E1D2"
                BuildableName = "UE4CmdLineRun.xctest"
                BlueprintName = "UE4CmdLineRun"
                ReferencedContainer = "container:ShooterGame.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "928F2E68AA842D060DD6CFDD"
+            BlueprintIdentifier = "18622FC434B7BB8CFCCEC277"
             BuildableName = "ShooterGameEditor - Mac"
             BlueprintName = "ShooterGameEditor - Mac"
             ReferencedContainer = "container:ShooterGame.xcodeproj">
@@ -68,7 +68,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "928F2E68AA842D060DD6CFDD"
+            BlueprintIdentifier = "18622FC434B7BB8CFCCEC277"
             BuildableName = "ShooterGameEditor - Mac"
             BlueprintName = "ShooterGameEditor - Mac"
             ReferencedContainer = "container:ShooterGame.xcodeproj">
@@ -97,7 +97,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "928F2E68AA842D060DD6CFDD"
+            BlueprintIdentifier = "18622FC434B7BB8CFCCEC277"
             BuildableName = "UE4Editor.app"
             BlueprintName = "UE4Editor"
             ReferencedContainer = "container:UE4.xcodeproj">

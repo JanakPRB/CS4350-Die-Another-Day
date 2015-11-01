@@ -59,7 +59,7 @@ void AShooterCharacter::PostInitializeComponents()
         // Default value
         HPMax = GetMaxHealth();
         HungerMax = 100.f;
-        HungerCurrent = 40.f;
+        Hunger = 40.f;
         StaminaMax = 100.f;
         StaminaCurrent = 100.f;
         HPReduceRate = 1.f;
@@ -1053,7 +1053,7 @@ void AShooterCharacter::Tick(float DeltaSeconds)
 	}
     
     // if hungry, reduce HP, else ruduce hunger
-    if (HungerCurrent <= 0) {
+    if (Hunger <= 0) {
         isHungry = true;
     } else {
         isHungry = false;
@@ -1127,7 +1127,7 @@ void AShooterCharacter::Tick(float DeltaSeconds)
 
         }
     }else{
-        HungerCurrent -= DeltaSeconds * HungerReduceRate;
+        Hunger -= DeltaSeconds * HungerReduceRate;
     }
     
     // if running, reduce stamina, else regenerate stamina
@@ -1152,10 +1152,10 @@ void AShooterCharacter::Tick(float DeltaSeconds)
         StaminaCurrent = 0;
     }
     
-    if (HungerCurrent > HungerMax) {
-        HungerCurrent = HungerMax;
-    }else if(HungerCurrent < 0){
-        HungerCurrent = 0;
+    if (Hunger > HungerMax) {
+        Hunger = HungerMax;
+    }else if(Hunger < 0){
+        Hunger = 0;
     }
 
 	
@@ -1281,6 +1281,11 @@ bool AShooterCharacter::IsFirstPerson() const
 int32 AShooterCharacter::GetMaxHealth() const
 {
 	return GetClass()->GetDefaultObject<AShooterCharacter>()->Health;
+}
+
+int32 AShooterCharacter::GetMaxHunger() const
+{
+    return 100;
 }
 
 bool AShooterCharacter::IsAlive() const

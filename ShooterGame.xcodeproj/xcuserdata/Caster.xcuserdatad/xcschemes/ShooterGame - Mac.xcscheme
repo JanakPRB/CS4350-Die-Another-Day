@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0C82E6B726A48B752F27AE72"
+               BlueprintIdentifier = "A1454C34D507AEB38343B430"
                BuildableName = "ShooterGame - Mac"
                BlueprintName = "ShooterGame - Mac"
                ReferencedContainer = "container:ShooterGame.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "14731C46AA6C22889327D60E"
+               BlueprintIdentifier = "F240FA5B37EED55BFC25E1D2"
                BuildableName = "UE4CmdLineRun.xctest"
                BlueprintName = "UE4CmdLineRun"
                ReferencedContainer = "container:ShooterGame.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0C82E6B726A48B752F27AE72"
+            BlueprintIdentifier = "A1454C34D507AEB38343B430"
             BuildableName = "ShooterGame - Mac"
             BlueprintName = "ShooterGame - Mac"
             ReferencedContainer = "container:ShooterGame.xcodeproj">
@@ -68,7 +68,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0C82E6B726A48B752F27AE72"
+            BlueprintIdentifier = "A1454C34D507AEB38343B430"
             BuildableName = "ShooterGame - Mac"
             BlueprintName = "ShooterGame - Mac"
             ReferencedContainer = "container:ShooterGame.xcodeproj">
@@ -97,7 +97,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0C82E6B726A48B752F27AE72"
+            BlueprintIdentifier = "A1454C34D507AEB38343B430"
             BuildableName = "ShooterGame.app"
             BlueprintName = "ShooterGame"
             ReferencedContainer = "container:UE4.xcodeproj">

@@ -115,11 +115,11 @@ static struct FScriptStruct_ShooterGame_StaticRegisterNativesFDecalData
 		FNativeFunctionRegistrar::RegisterFunction(AShooterCharacter::StaticClass(),"ServerSetRunning",(Native)&AShooterCharacter::execServerSetRunning);
 		FNativeFunctionRegistrar::RegisterFunction(AShooterCharacter::StaticClass(),"ServerSetTargeting",(Native)&AShooterCharacter::execServerSetTargeting);
 	}
-	IMPLEMENT_CLASS(AShooterCharacter, 1423121716);
+	IMPLEMENT_CLASS(AShooterCharacter, 322138913);
 	void AShooterBot::StaticRegisterNativesAShooterBot()
 	{
 	}
-	IMPLEMENT_CLASS(AShooterBot, 1939405039);
+	IMPLEMENT_CLASS(AShooterBot, 812637525);
 	void UShooterCharacterMovement::StaticRegisterNativesUShooterCharacterMovement()
 	{
 	}
@@ -346,6 +346,10 @@ static struct FScriptStruct_ShooterGame_StaticRegisterNativesFShooterOptionsStyl
 	{
 	}
 	IMPLEMENT_CLASS(AShooterPickup_Health, 3883744015);
+	void AShooterPickup_Hunger::StaticRegisterNativesAShooterPickup_Hunger()
+	{
+	}
+	IMPLEMENT_CLASS(AShooterPickup_Hunger, 2934132044);
 	void AShooterPlayerCameraManager::StaticRegisterNativesAShooterPlayerCameraManager()
 	{
 	}
@@ -842,6 +846,8 @@ FName SHOOTERGAME_ServerSuicide = FName(TEXT("ServerSuicide"));
 	SHOOTERGAME_API class UClass* Z_Construct_UClass_AShooterPickup_Ammo();
 	SHOOTERGAME_API class UClass* Z_Construct_UClass_AShooterPickup_Health_NoRegister();
 	SHOOTERGAME_API class UClass* Z_Construct_UClass_AShooterPickup_Health();
+	SHOOTERGAME_API class UClass* Z_Construct_UClass_AShooterPickup_Hunger_NoRegister();
+	SHOOTERGAME_API class UClass* Z_Construct_UClass_AShooterPickup_Hunger();
 	SHOOTERGAME_API class UClass* Z_Construct_UClass_AShooterPlayerCameraManager_NoRegister();
 	SHOOTERGAME_API class UClass* Z_Construct_UClass_AShooterPlayerCameraManager();
 	SHOOTERGAME_API class UFunction* Z_Construct_UFunction_AShooterPlayerController_ClientEndOnlineGame();
@@ -1540,7 +1546,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 				UProperty* NewProp_HPReduceRate = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("HPReduceRate"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(HPReduceRate, AShooterCharacter), 0x0000000000000005);
 				UProperty* NewProp_StaminaCurrent = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("StaminaCurrent"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(StaminaCurrent, AShooterCharacter), 0x0000000000000005);
 				UProperty* NewProp_StaminaMax = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("StaminaMax"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(StaminaMax, AShooterCharacter), 0x0000000000000005);
-				UProperty* NewProp_HungerCurrent = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("HungerCurrent"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(HungerCurrent, AShooterCharacter), 0x0000000000000005);
+				UProperty* NewProp_Hunger = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("Hunger"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(Hunger, AShooterCharacter), 0x0000000000000005);
 				UProperty* NewProp_HungerMax = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("HungerMax"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(HungerMax, AShooterCharacter), 0x0000000000000005);
 				UProperty* NewProp_HPMax = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("HPMax"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(HPMax, AShooterCharacter), 0x0000000000000005);
 				UProperty* NewProp_Health = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("Health"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(Health, AShooterCharacter), 0x0000000000000025);
@@ -1608,8 +1614,8 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				MetaData->SetValue(NewProp_StaminaCurrent, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
 				MetaData->SetValue(NewProp_StaminaMax, TEXT("Category"), TEXT("Core Mechanism"));
 				MetaData->SetValue(NewProp_StaminaMax, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
-				MetaData->SetValue(NewProp_HungerCurrent, TEXT("Category"), TEXT("Core Mechanism"));
-				MetaData->SetValue(NewProp_HungerCurrent, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
+				MetaData->SetValue(NewProp_Hunger, TEXT("Category"), TEXT("Core Mechanism"));
+				MetaData->SetValue(NewProp_Hunger, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
 				MetaData->SetValue(NewProp_HungerMax, TEXT("Category"), TEXT("Core Mechanism"));
 				MetaData->SetValue(NewProp_HungerMax, TEXT("ModuleRelativePath"), TEXT("Public/Player/ShooterCharacter.h"));
 				MetaData->SetValue(NewProp_HungerMax, TEXT("ToolTip"), TEXT("UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Core Mechanism\")\nfloat HPCurrent;"));
@@ -3394,6 +3400,46 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 	}
 	static FCompiledInDefer Z_CompiledInDefer_UClass_AShooterPickup_Health(Z_Construct_UClass_AShooterPickup_Health, TEXT("AShooterPickup_Health"));
 	DEFINE_VTABLE_PTR_HELPER_CTOR(AShooterPickup_Health);
+	UClass* Z_Construct_UClass_AShooterPickup_Hunger_NoRegister()
+	{
+		return AShooterPickup_Hunger::StaticClass();
+	}
+	UClass* Z_Construct_UClass_AShooterPickup_Hunger()
+	{
+		static UClass* OuterClass = NULL;
+		if (!OuterClass)
+		{
+			Z_Construct_UClass_AShooterPickup();
+			Z_Construct_UPackage_ShooterGame();
+			OuterClass = AShooterPickup_Hunger::StaticClass();
+			if (!(OuterClass->ClassFlags & CLASS_Constructed))
+			{
+				UObjectForceRegistration(OuterClass);
+				OuterClass->ClassFlags |= 0x20800081;
+
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+				UProperty* NewProp_Hunger = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("Hunger"), RF_Public|RF_Transient|RF_Native) UIntProperty(CPP_PROPERTY_BASE(Hunger, AShooterPickup_Hunger), 0x0000080000010001);
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
+				OuterClass->StaticLink();
+#if WITH_METADATA
+				UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
+				MetaData->SetValue(OuterClass, TEXT("BlueprintType"), TEXT("true"));
+				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("Pickups/ShooterPickup_Hunger.h"));
+				MetaData->SetValue(OuterClass, TEXT("IsBlueprintBase"), TEXT("true"));
+				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("Public/Pickups/ShooterPickup_Hunger.h"));
+				MetaData->SetValue(OuterClass, TEXT("ToolTip"), TEXT("A pickup object that replenishes character Hunger"));
+				MetaData->SetValue(NewProp_Hunger, TEXT("Category"), TEXT("Pickup"));
+				MetaData->SetValue(NewProp_Hunger, TEXT("ModuleRelativePath"), TEXT("Public/Pickups/ShooterPickup_Hunger.h"));
+				MetaData->SetValue(NewProp_Hunger, TEXT("ToolTip"), TEXT("how much Hunger does it give?"));
+#endif
+			}
+		}
+		check(OuterClass->GetClass());
+		return OuterClass;
+	}
+	static FCompiledInDefer Z_CompiledInDefer_UClass_AShooterPickup_Hunger(Z_Construct_UClass_AShooterPickup_Hunger, TEXT("AShooterPickup_Hunger"));
+	DEFINE_VTABLE_PTR_HELPER_CTOR(AShooterPickup_Hunger);
 	UClass* Z_Construct_UClass_AShooterPlayerCameraManager_NoRegister()
 	{
 		return AShooterPlayerCameraManager::StaticClass();
@@ -4931,8 +4977,8 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/ShooterGame")), false, false));
 			ReturnPackage->PackageFlags |= PKG_CompiledIn | 0x00000000;
 			FGuid Guid;
-			Guid.A = 0x89FDF855;
-			Guid.B = 0xF3DF35AF;
+			Guid.A = 0x9F7E3BC5;
+			Guid.B = 0x3D090AF5;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
 			ReturnPackage->SetGuid(Guid);

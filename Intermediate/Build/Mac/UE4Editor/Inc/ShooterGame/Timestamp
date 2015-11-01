@@ -21,6 +21,7 @@
 /Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Public/Pickups/ShooterPickup.h
 /Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Public/Pickups/ShooterPickup_Ammo.h
 /Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Public/Pickups/ShooterPickup_Health.h
+/Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Public/Pickups/ShooterPickup_Hunger.h
 /Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Public/Player/ShooterCharacter.h
 /Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Public/Player/ShooterCharacterMovement.h
 /Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Public/Player/ShooterCheatManager.h

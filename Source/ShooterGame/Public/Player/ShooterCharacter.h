@@ -232,6 +232,8 @@ class AShooterCharacter : public ACharacter
 
 	/** get max health */
 	int32 GetMaxHealth() const;
+    
+    int32 GetMaxHunger() const;
 
 	/** check if pawn is still alive */
 	bool IsAlive() const;
@@ -391,7 +393,7 @@ public:
     float HungerMax;
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
-    float HungerCurrent;
+    float Hunger;
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
     float StaminaMax;

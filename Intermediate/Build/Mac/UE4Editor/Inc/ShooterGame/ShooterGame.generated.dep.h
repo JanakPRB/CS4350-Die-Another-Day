@@ -107,6 +107,9 @@
 #ifndef SHOOTERGAME_ShooterPickup_Health_generated_h
 	#include "Public/Pickups/ShooterPickup_Health.h"
 #endif
+#ifndef SHOOTERGAME_ShooterPickup_Hunger_generated_h
+	#include "Public/Pickups/ShooterPickup_Hunger.h"
+#endif
 #ifndef SHOOTERGAME_ShooterPlayerCameraManager_generated_h
 	#include "Public/Player/ShooterPlayerCameraManager.h"
 #endif

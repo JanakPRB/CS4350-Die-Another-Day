@@ -25,6 +25,7 @@
 #include "/Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Private/Pickups/ShooterPickup.cpp"
 #include "/Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Private/Pickups/ShooterPickup_Ammo.cpp"
 #include "/Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Private/Pickups/ShooterPickup_Health.cpp"
+#include "/Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Private/Pickups/ShooterPickup_Hunger.cpp"
 #include "/Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Private/Player/ShooterCharacter.cpp"
 #include "/Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Private/Player/ShooterCharacterMovement.cpp"
 #include "/Users/Caster/Desktop/ShooterGame/Source/ShooterGame/Private/Player/ShooterCheatManager.cpp"
