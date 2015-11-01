@@ -62,8 +62,8 @@ void AShooterCharacter::PostInitializeComponents()
         HungerCurrent = 40.f;
         StaminaMax = 100.f;
         StaminaCurrent = 100.f;
-        HPReduceRate = 1.f;
-        HungerReduceRate = 1.f;
+        HPReduceRate = 10.f;
+        HungerReduceRate = 10.f;
         StaminaReduceRate = 5.0f;
         StaminaRegenRate = 10.f;
         isHungry = false;
@@ -332,7 +332,7 @@ void AShooterCharacter::OnDeath(float KillingDamage, struct FDamageEvent const& 
 	bTearOff = true;
 	bIsDying = true;
 
-	if (Role == ROLE_Authority)
+	if (Role == ROLE_Authority && DamageCauser != NULL)
 	{
 		ReplicateHit(KillingDamage, DamageEvent, PawnInstigator, DamageCauser, true);	
 
@@ -1061,6 +1061,71 @@ void AShooterCharacter::Tick(float DeltaSeconds)
     
     if (isHungry) {
         Health -= DeltaSeconds * HPReduceRate;
+        if (Health <= 0)
+        {
+            if (bIsDying)
+            {
+                return;
+            }
+            
+            bReplicateMovement = false;
+            bTearOff = true;
+            bIsDying = true;
+            
+            // cannot use IsLocallyControlled here, because even local client's controller may be NULL here
+            if (GetNetMode() != NM_DedicatedServer && DeathSound && Mesh1P && Mesh1P->IsVisible())
+            {
+                UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
+            }
+            
+            // remove all weapons
+            DestroyInventory();
+            
+            // switch back to 3rd person view
+            UpdatePawnMeshes();
+            
+            DetachFromControllerPendingDestroy();
+            StopAllAnimMontages();
+            
+            if (LowHealthWarningPlayer && LowHealthWarningPlayer->IsPlaying())
+            {
+                LowHealthWarningPlayer->Stop();
+            }
+            
+            if (RunLoopAC)
+            {
+                RunLoopAC->Stop();
+            }
+            
+            
+            
+            if (GetMesh())
+            {
+                static FName CollisionProfileName(TEXT("Ragdoll"));
+                GetMesh()->SetCollisionProfileName(CollisionProfileName);
+            }
+            SetActorEnableCollision(true);
+            
+            // Death anim
+            float DeathAnimDuration = PlayAnimMontage(DeathAnim);
+            
+            // Ragdoll
+            if (DeathAnimDuration > 0.f)
+            {
+                // Use a local timer handle as we don't need to store it for later but we don't need to look for something to clear
+                FTimerHandle TimerHandle;
+                GetWorldTimerManager().SetTimer(TimerHandle, this, &AShooterCharacter::SetRagdollPhysics, FMath::Min(0.1f, DeathAnimDuration), false);
+            }
+            else
+            {
+                SetRagdollPhysics();
+            }
+            
+            // disable collisions on capsule
+            GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+            GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+
+        }
     }else{
         HungerCurrent -= DeltaSeconds * HungerReduceRate;
     }
