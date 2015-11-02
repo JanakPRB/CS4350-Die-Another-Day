@@ -136,7 +136,7 @@ void AShooterHUD::DrawWeaponHUD()
 		//PRIMARY WEAPON
 		{
 			const float PriWeapOffsetY = 65;
-			const float PriWeaponBoxWidth = 150;
+			const float PriWeaponBoxWidth = 250;
 		
 			Canvas->SetDrawColor(FColor::White);
 			const float PriWeapBgPosY =  Canvas->ClipY - Canvas->OrgY - (PriWeapOffsetY + PrimaryWeapBg.VL + Offset) * ScaleUI;
