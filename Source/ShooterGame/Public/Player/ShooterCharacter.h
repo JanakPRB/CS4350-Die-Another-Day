@@ -174,12 +174,6 @@ class AShooterCharacter : public ACharacter
 	/** player released jump action */
 	void OnStopJump();
 
-	/** player pressed jump action */
-	void OnStartCrouch();
-
-	/** player released jump action */
-	void OnStopCrouch();
-
 	/** player pressed run action */
 	void OnStartRunning();
 
@@ -238,6 +232,8 @@ class AShooterCharacter : public ACharacter
 
 	/** get max health */
 	int32 GetMaxHealth() const;
+    
+    int32 GetMaxHunger() const;
 
 	/** check if pawn is still alive */
 	bool IsAlive() const;
@@ -383,6 +379,50 @@ public:
 	// Current health of the Pawn
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category=Health)
 	float Health;
+    
+    // Code of core mechanism from CS4350 Project
+    
+    /** The core game mechanism **/
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float HPMax;
+    
+    //UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    //float HPCurrent;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float HungerMax;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float Hunger;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float StaminaMax;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float StaminaCurrent;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float HPReduceRate;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float HungerReduceRate;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float StaminaReduceRate;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    float StaminaRegenRate;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    bool isHungry;
+    FTimerHandle HungerReduceTimerHandle;
+    
+    //UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Core Mechanism")
+    //bool isRunning;
+    FTimerHandle StaminaReduceTimerHandle;
+    FTimerHandle StaminaRegenTimerHandle;
+
+    
 
 	/** Take damage, handle death */
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;

@@ -54,6 +54,20 @@ void AShooterCharacter::PostInitializeComponents()
 	if (Role == ROLE_Authority)
 	{
 		Health = GetMaxHealth();
+        
+        // Core mechanism
+        // Default value
+        HPMax = GetMaxHealth();
+        HungerMax = 100.f;
+        Hunger = 40.f;
+        StaminaMax = 100.f;
+        StaminaCurrent = 100.f;
+        HPReduceRate = 1.f;
+        HungerReduceRate = 1.f;
+        StaminaReduceRate = 5.0f;
+        StaminaRegenRate = 10.f;
+        isHungry = false;
+        
 		SpawnDefaultInventory();
 	}
 
@@ -318,7 +332,7 @@ void AShooterCharacter::OnDeath(float KillingDamage, struct FDamageEvent const& 
 	bTearOff = true;
 	bIsDying = true;
 
-	if (Role == ROLE_Authority)
+	if (Role == ROLE_Authority && DamageCauser != NULL)
 	{
 		ReplicateHit(KillingDamage, DamageEvent, PawnInstigator, DamageCauser, true);	
 
@@ -841,9 +855,6 @@ void AShooterCharacter::SetupPlayerInputComponent(class UInputComponent* InputCo
 	InputComponent->BindAction("Jump", IE_Pressed, this, &AShooterCharacter::OnStartJump);
 	InputComponent->BindAction("Jump", IE_Released, this, &AShooterCharacter::OnStopJump);
 
-	InputComponent->BindAction("Crouch", IE_Pressed, this, &AShooterCharacter::OnStartCrouch);
-	InputComponent->BindAction("Crouch", IE_Released, this, &AShooterCharacter::OnStopCrouch);
-
 	InputComponent->BindAction("Run", IE_Pressed, this, &AShooterCharacter::OnStartRunning);
 	InputComponent->BindAction("RunToggle", IE_Pressed, this, &AShooterCharacter::OnStartRunningToggle);
 	InputComponent->BindAction("Run", IE_Released, this, &AShooterCharacter::OnStopRunning);
@@ -984,6 +995,9 @@ void AShooterCharacter::OnStartRunning()
 			SetTargeting(false);
 		}
 		StopWeaponFire();
+        if (StaminaCurrent <= 0) {
+            return;
+        }
 		SetRunning(true, false);
 	}
 }
@@ -1037,6 +1051,113 @@ void AShooterCharacter::Tick(float DeltaSeconds)
 			}
 		}
 	}
+    
+    // if hungry, reduce HP, else ruduce hunger
+    if (Hunger <= 0) {
+        isHungry = true;
+    } else {
+        isHungry = false;
+    }
+    
+    if (isHungry) {
+        Health -= DeltaSeconds * HPReduceRate;
+        if (Health <= 0)
+        {
+            if (bIsDying)
+            {
+                return;
+            }
+            
+            bReplicateMovement = false;
+            bTearOff = true;
+            bIsDying = true;
+            
+            // cannot use IsLocallyControlled here, because even local client's controller may be NULL here
+            if (GetNetMode() != NM_DedicatedServer && DeathSound && Mesh1P && Mesh1P->IsVisible())
+            {
+                UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
+            }
+            
+            // remove all weapons
+            DestroyInventory();
+            
+            // switch back to 3rd person view
+            UpdatePawnMeshes();
+            
+            DetachFromControllerPendingDestroy();
+            StopAllAnimMontages();
+            
+            if (LowHealthWarningPlayer && LowHealthWarningPlayer->IsPlaying())
+            {
+                LowHealthWarningPlayer->Stop();
+            }
+            
+            if (RunLoopAC)
+            {
+                RunLoopAC->Stop();
+            }
+            
+            
+            
+            if (GetMesh())
+            {
+                static FName CollisionProfileName(TEXT("Ragdoll"));
+                GetMesh()->SetCollisionProfileName(CollisionProfileName);
+            }
+            SetActorEnableCollision(true);
+            
+            // Death anim
+            float DeathAnimDuration = PlayAnimMontage(DeathAnim);
+            
+            // Ragdoll
+            if (DeathAnimDuration > 0.f)
+            {
+                // Use a local timer handle as we don't need to store it for later but we don't need to look for something to clear
+                FTimerHandle TimerHandle;
+                GetWorldTimerManager().SetTimer(TimerHandle, this, &AShooterCharacter::SetRagdollPhysics, FMath::Min(0.1f, DeathAnimDuration), false);
+            }
+            else
+            {
+                SetRagdollPhysics();
+            }
+            
+            // disable collisions on capsule
+            GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+            GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+
+        }
+    }else{
+        Hunger -= DeltaSeconds * HungerReduceRate;
+    }
+    
+    // if running, reduce stamina, else regenerate stamina
+    if (IsRunning()) {
+        if(StaminaCurrent > 0){
+            StaminaCurrent -= DeltaSeconds * StaminaReduceRate;
+        }
+    } else if(StaminaCurrent < StaminaMax){
+        StaminaCurrent += DeltaSeconds * StaminaRegenRate;
+    }
+    
+    // adjust value if excedes boundary
+    if (Health > HPMax) {
+        Health = HPMax;
+    }else if(Health < 0){
+        Health = 0;
+    }
+    
+    if (StaminaCurrent > StaminaMax) {
+        StaminaCurrent = StaminaMax;
+    }else if(StaminaCurrent < 0){
+        StaminaCurrent = 0;
+    }
+    
+    if (Hunger > HungerMax) {
+        Hunger = HungerMax;
+    }else if(Hunger < 0){
+        Hunger = 0;
+    }
+
 	
 	if (LowHealthSound && GEngine->UseSound())
 	{
@@ -1071,20 +1192,6 @@ void AShooterCharacter::OnStartJump()
 void AShooterCharacter::OnStopJump()
 {
 	bPressedJump = false;
-}
-
-void AShooterCharacter::OnStartCrouch()
-{
-	AShooterPlayerController* MyPC = Cast<AShooterPlayerController>(Controller);
-	if (MyPC && MyPC->IsGameInputAllowed())
-	{
-		bIsCrouched = true;
-	}
-}
-
-void AShooterCharacter::OnStopCrouch()
-{
-	bIsCrouched = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1174,6 +1281,11 @@ bool AShooterCharacter::IsFirstPerson() const
 int32 AShooterCharacter::GetMaxHealth() const
 {
 	return GetClass()->GetDefaultObject<AShooterCharacter>()->Health;
+}
+
+int32 AShooterCharacter::GetMaxHunger() const
+{
+    return 100;
 }
 
 bool AShooterCharacter::IsAlive() const

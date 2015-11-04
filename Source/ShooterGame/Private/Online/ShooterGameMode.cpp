@@ -14,6 +14,7 @@
 
 AShooterGameMode::AShooterGameMode(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
+
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnOb(TEXT("/Game/Blueprints/Pawns/PlayerPawn"));
 	DefaultPawnClass = PlayerPawnOb.Class;
 	
@@ -27,7 +28,7 @@ AShooterGameMode::AShooterGameMode(const FObjectInitializer& ObjectInitializer) 
 	GameStateClass = AShooterGameState::StaticClass();
 	ReplaySpectatorPlayerControllerClass = AShooterDemoSpectator::StaticClass();
 
-	MinRespawnDelay = 5.0f;
+	MinRespawnDelay = 10.0f;
 
 	bAllowBots = true;	
 	bNeedsBotCreation = true;
