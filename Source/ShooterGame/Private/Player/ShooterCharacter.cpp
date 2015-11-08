@@ -1288,6 +1288,11 @@ int32 AShooterCharacter::GetMaxHunger() const
     return 100;
 }
 
+int32 AShooterCharacter::GetMaxStamina() const
+{
+	return 100;
+}
+
 bool AShooterCharacter::IsAlive() const
 {
 	return Health > 0;

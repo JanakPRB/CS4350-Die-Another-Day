@@ -235,6 +235,8 @@ class AShooterCharacter : public ACharacter
     
     int32 GetMaxHunger() const;
 
+	int32 GetMaxStamina() const;
+
 	/** check if pawn is still alive */
 	bool IsAlive() const;
 

@@ -62,9 +62,12 @@ AShooterHUD::AShooterHUD(const FObjectInitializer& ObjectInitializer) : Super(Ob
 	HungerBar = UCanvas::MakeIcon(HUDAssets02Texture, 67, 212, 372, 50);
 	HungerBarBg = UCanvas::MakeIcon(HUDAssets02Texture, 67, 162, 372, 50);
 
+	StaminaBar = UCanvas::MakeIcon(HUDAssets02Texture, 67, 212, 372, 50);
+	StaminaBarBg = UCanvas::MakeIcon(HUDAssets02Texture, 67, 162, 372, 50);
 
 	HealthIcon = UCanvas::MakeIcon(HUDAssets02Texture, 78, 262, 28, 28);
-	HungerIcon = UCanvas::MakeIcon(HUDAssets02Texture, 78, 262, 28, 28);
+	HungerIcon = UCanvas::MakeIcon(HUDAssets02Texture, 170, 262, 28, 28);
+	StaminaIcon = UCanvas::MakeIcon(HUDAssets02Texture, 125, 262, 28, 28);
 
 	KillsIcon = UCanvas::MakeIcon(HUDMainTexture, 318, 93, 24, 24);
 	TimerIcon = UCanvas::MakeIcon(HUDMainTexture, 381, 93, 24, 24);
@@ -337,7 +340,7 @@ void AShooterHUD::DrawHunger()
 	AShooterCharacter* MyPawn = Cast<AShooterCharacter>(GetOwningPawn());
 	Canvas->SetDrawColor(FColor::White);
 	const float HungerPosX = (Canvas->ClipX - HungerBarBg.UL * ScaleUI) / 2;
-	const float HungerPosY = Canvas->ClipY - (Offset + HungerBarBg.VL) * ScaleUI - 200;
+	const float HungerPosY = Canvas->ClipY - (Offset + HungerBarBg.VL) * ScaleUI - 100;
 	Canvas->DrawIcon(HungerBarBg, HungerPosX, HungerPosY, ScaleUI);
 	const float HungerAmount = FMath::Min(1.0f, MyPawn->Hunger / MyPawn->GetMaxHunger());
 
@@ -348,6 +351,24 @@ void AShooterHUD::DrawHunger()
 	Canvas->DrawItem(TileItem);
 
 	Canvas->DrawIcon(HungerIcon, HungerPosX + Offset * ScaleUI, HungerPosY + (HungerBar.VL - HungerIcon.VL) / 2.0f * ScaleUI, ScaleUI);
+}
+
+void AShooterHUD::DrawStamina()
+{
+	AShooterCharacter* MyPawn = Cast<AShooterCharacter>(GetOwningPawn());
+	Canvas->SetDrawColor(FColor::White);
+	const float StaminaPosX = (Canvas->ClipX - StaminaBarBg.UL * ScaleUI) / 2;
+	const float StaminaPosY = Canvas->ClipY - (Offset + StaminaBarBg.VL) * ScaleUI - 50;
+	Canvas->DrawIcon(StaminaBarBg, StaminaPosX, StaminaPosY, ScaleUI);
+	const float StaminaAmount = FMath::Min(1.0f, MyPawn->StaminaCurrent / MyPawn->GetMaxStamina());
+
+	FCanvasTileItem TileItem(FVector2D(StaminaPosX, StaminaPosY), StaminaBar.Texture->Resource,
+		FVector2D(StaminaBar.UL * StaminaAmount  * ScaleUI, StaminaBar.VL * ScaleUI), FLinearColor::White);
+	MakeUV(StaminaBar, TileItem.UV0, TileItem.UV1, StaminaBar.U, StaminaBar.V, StaminaBar.UL * StaminaAmount, StaminaBar.VL);
+	TileItem.BlendMode = SE_BLEND_Translucent;
+	Canvas->DrawItem(TileItem);
+
+	Canvas->DrawIcon(StaminaIcon, StaminaPosX + Offset * ScaleUI, StaminaPosY + (StaminaBar.VL - StaminaIcon.VL) / 2.0f * ScaleUI, ScaleUI);
 }
 
 void AShooterHUD::DrawMatchTimerAndPosition()
@@ -595,6 +616,7 @@ void AShooterHUD::DrawHUD()
 		{
 			DrawHealth();
 			DrawHunger();
+			DrawStamina();
 			DrawWeaponHUD();
 		}
 		else
