@@ -145,7 +145,7 @@ void AShooterHUD::DrawWeaponHUD()
 		//PRIMARY WEAPON
 		{
 			const float PriWeapOffsetY = 65;
-			const float PriWeaponBoxWidth = 250;
+			const float PriWeaponBoxWidth = 170;
 		
 			Canvas->SetDrawColor(FColor::White);
 			const float PriWeapBgPosY =  Canvas->ClipY - Canvas->OrgY - (PriWeapOffsetY + PrimaryWeapBg.VL + Offset) * ScaleUI;
@@ -321,13 +321,13 @@ void AShooterHUD::DrawHealth()
 {
 	AShooterCharacter* MyPawn = Cast<AShooterCharacter>(GetOwningPawn());
 	Canvas->SetDrawColor(FColor::White);
-	const float HealthPosX = (Canvas->ClipX - HealthBarBg.UL * ScaleUI) / 2;
+	const float HealthPosX = Canvas->OrgX + Offset * ScaleUI;
 	const float HealthPosY = Canvas->ClipY - (Offset + HealthBarBg.VL) * ScaleUI;
 	Canvas->DrawIcon(HealthBarBg, HealthPosX, HealthPosY, ScaleUI);
 	const float HealthAmount =  FMath::Min(1.0f,MyPawn->Health / MyPawn->GetMaxHealth());
 
-	FCanvasTileItem TileItem(FVector2D(HealthPosX,HealthPosY), HealthBar.Texture->Resource, 
-							 FVector2D(HealthBar.UL * HealthAmount  * ScaleUI, HealthBar.VL * ScaleUI), FLinearColor::White);
+	FCanvasTileItem TileItem(FVector2D(HealthPosX + 50 * ScaleUI, HealthPosY), HealthBar.Texture->Resource,
+		FVector2D((HealthBar.UL - 50) * HealthAmount  * ScaleUI, HealthBar.VL * ScaleUI), FLinearColor::White);
 	MakeUV(HealthBar, TileItem.UV0, TileItem.UV1, HealthBar.U, HealthBar.V, HealthBar.UL * HealthAmount, HealthBar.VL);  
 	TileItem.BlendMode = SE_BLEND_Translucent;
 	Canvas->DrawItem(TileItem);
@@ -339,13 +339,13 @@ void AShooterHUD::DrawHunger()
 {
 	AShooterCharacter* MyPawn = Cast<AShooterCharacter>(GetOwningPawn());
 	Canvas->SetDrawColor(FColor::White);
-	const float HungerPosX = (Canvas->ClipX - HungerBarBg.UL * ScaleUI) / 2;
-	const float HungerPosY = Canvas->ClipY - (Offset + HungerBarBg.VL) * ScaleUI - 100;
+	const float HungerPosX = Canvas->OrgX + (Offset * 3 + HealthBarBg.UL + StaminaBarBg.UL) * ScaleUI;
+	const float HungerPosY = Canvas->ClipY - (Offset + HungerBarBg.VL) * ScaleUI;
 	Canvas->DrawIcon(HungerBarBg, HungerPosX, HungerPosY, ScaleUI);
 	const float HungerAmount = FMath::Min(1.0f, MyPawn->Hunger / MyPawn->GetMaxHunger());
 
-	FCanvasTileItem TileItem(FVector2D(HungerPosX, HungerPosY), HungerBar.Texture->Resource,
-	FVector2D(HungerBar.UL * HungerAmount  * ScaleUI, HungerBar.VL * ScaleUI), FLinearColor::White);
+	FCanvasTileItem TileItem(FVector2D(HungerPosX + 50 * ScaleUI, HungerPosY), HungerBar.Texture->Resource,
+		FVector2D((HungerBar.UL - 50) * HungerAmount  * ScaleUI, HungerBar.VL * ScaleUI), FLinearColor::White);
 	MakeUV(HungerBar, TileItem.UV0, TileItem.UV1, HungerBar.U, HungerBar.V, HungerBar.UL * HungerAmount, HungerBar.VL);
 	TileItem.BlendMode = SE_BLEND_Translucent;
 	Canvas->DrawItem(TileItem);
@@ -357,13 +357,13 @@ void AShooterHUD::DrawStamina()
 {
 	AShooterCharacter* MyPawn = Cast<AShooterCharacter>(GetOwningPawn());
 	Canvas->SetDrawColor(FColor::White);
-	const float StaminaPosX = (Canvas->ClipX - StaminaBarBg.UL * ScaleUI) / 2;
-	const float StaminaPosY = Canvas->ClipY - (Offset + StaminaBarBg.VL) * ScaleUI - 50;
+	const float StaminaPosX = Canvas->OrgX + (Offset*2 + HealthBarBg.UL) * ScaleUI;
+	const float StaminaPosY = Canvas->ClipY - (Offset + StaminaBarBg.VL) * ScaleUI;
 	Canvas->DrawIcon(StaminaBarBg, StaminaPosX, StaminaPosY, ScaleUI);
 	const float StaminaAmount = FMath::Min(1.0f, MyPawn->StaminaCurrent / MyPawn->GetMaxStamina());
 
-	FCanvasTileItem TileItem(FVector2D(StaminaPosX, StaminaPosY), StaminaBar.Texture->Resource,
-		FVector2D(StaminaBar.UL * StaminaAmount  * ScaleUI, StaminaBar.VL * ScaleUI), FLinearColor::White);
+	FCanvasTileItem TileItem(FVector2D(StaminaPosX + 50 * ScaleUI, StaminaPosY), StaminaBar.Texture->Resource,
+		FVector2D((StaminaBar.UL - 50) * StaminaAmount  * ScaleUI, StaminaBar.VL * ScaleUI), FLinearColor::White);
 	MakeUV(StaminaBar, TileItem.UV0, TileItem.UV1, StaminaBar.U, StaminaBar.V, StaminaBar.UL * StaminaAmount, StaminaBar.VL);
 	TileItem.BlendMode = SE_BLEND_Translucent;
 	Canvas->DrawItem(TileItem);
@@ -792,11 +792,11 @@ void AShooterHUD::DrawDeathMessages()
 
 	Canvas->SetDrawColor(FColor::White);
 	float DeathMsgsPosX = Canvas->OrgX + Offset * ScaleUI;
-	float DeathMsgsPosY = Canvas->ClipY - (OffsetY + DeathMessagesBg.VL) * ScaleUI;
+	float DeathMsgsPosY = Canvas->ClipY - (OffsetY + DeathMessagesBg.VL) * ScaleUI - (OffsetY + HungerBarBg.VL) * ScaleUI;
 	FVector Scale(ScaleUI, ScaleUI, 0.f);
 	// hardcoded value to make sure the box is big enough to hold 16 W's for both players' names
 	Scale.X *= 1.85;
-	Canvas->DrawScaledIcon(DeathMessagesBg, DeathMsgsPosX, DeathMsgsPosY, Scale);
+	//Canvas->DrawScaledIcon(DeathMessagesBg, DeathMsgsPosX, DeathMsgsPosY, Scale);
 
 	const FColor BlueTeamColor = FColor(70, 70, 152, 255);
 	const FColor RedTeamColor = FColor(152, 70, 70, 255);
