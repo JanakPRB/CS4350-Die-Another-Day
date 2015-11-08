@@ -59,7 +59,13 @@ AShooterHUD::AShooterHUD(const FObjectInitializer& ObjectInitializer) : Super(Ob
 	HealthBar = UCanvas::MakeIcon(HUDAssets02Texture, 67, 212, 372, 50);
 	HealthBarBg = UCanvas::MakeIcon(HUDAssets02Texture, 67, 162, 372, 50);
 
+	HungerBar = UCanvas::MakeIcon(HUDAssets02Texture, 67, 212, 372, 50);
+	HungerBarBg = UCanvas::MakeIcon(HUDAssets02Texture, 67, 162, 372, 50);
+
+
 	HealthIcon = UCanvas::MakeIcon(HUDAssets02Texture, 78, 262, 28, 28);
+	HungerIcon = UCanvas::MakeIcon(HUDAssets02Texture, 78, 262, 28, 28);
+
 	KillsIcon = UCanvas::MakeIcon(HUDMainTexture, 318, 93, 24, 24);
 	TimerIcon = UCanvas::MakeIcon(HUDMainTexture, 381, 93, 24, 24);
 	KilledIcon = UCanvas::MakeIcon(HUDMainTexture, 425, 92, 38, 36);
@@ -326,6 +332,24 @@ void AShooterHUD::DrawHealth()
 	Canvas->DrawIcon(HealthIcon,HealthPosX + Offset * ScaleUI, HealthPosY + (HealthBar.VL - HealthIcon.VL) / 2.0f * ScaleUI, ScaleUI);
 }
 
+void AShooterHUD::DrawHunger()
+{
+	AShooterCharacter* MyPawn = Cast<AShooterCharacter>(GetOwningPawn());
+	Canvas->SetDrawColor(FColor::White);
+	const float HungerPosX = (Canvas->ClipX - HungerBarBg.UL * ScaleUI) / 2;
+	const float HungerPosY = Canvas->ClipY - (Offset + HungerBarBg.VL) * ScaleUI - 200;
+	Canvas->DrawIcon(HungerBarBg, HungerPosX, HungerPosY, ScaleUI);
+	const float HungerAmount = FMath::Min(1.0f, MyPawn->Hunger / MyPawn->GetMaxHunger());
+
+	FCanvasTileItem TileItem(FVector2D(HungerPosX, HungerPosY), HungerBar.Texture->Resource,
+	FVector2D(HungerBar.UL * HungerAmount  * ScaleUI, HungerBar.VL * ScaleUI), FLinearColor::White);
+	MakeUV(HungerBar, TileItem.UV0, TileItem.UV1, HungerBar.U, HungerBar.V, HungerBar.UL * HungerAmount, HungerBar.VL);
+	TileItem.BlendMode = SE_BLEND_Translucent;
+	Canvas->DrawItem(TileItem);
+
+	Canvas->DrawIcon(HungerIcon, HungerPosX + Offset * ScaleUI, HungerPosY + (HungerBar.VL - HungerIcon.VL) / 2.0f * ScaleUI, ScaleUI);
+}
+
 void AShooterHUD::DrawMatchTimerAndPosition()
 {
 	AShooterGameState* const MyGameState = Cast<AShooterGameState>(GetWorld()->GameState);
@@ -570,6 +594,7 @@ void AShooterHUD::DrawHUD()
 		if (MyPawn && MyPawn->IsAlive())
 		{
 			DrawHealth();
+			DrawHunger();
 			DrawWeaponHUD();
 		}
 		else

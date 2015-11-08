@@ -216,6 +216,18 @@ protected:
 	UPROPERTY()
 	FCanvasIcon HealthIcon;
 
+	/** Hunger bar background icon. */
+	UPROPERTY()
+	FCanvasIcon HungerBarBg;
+
+	/** Hunger bar icon. */
+	UPROPERTY()
+	FCanvasIcon HungerBar;
+
+	/** Hunger icon on the hunger bar. */
+	UPROPERTY()
+	FCanvasIcon HungerIcon;
+
 	/** Kills icon. */
 	UPROPERTY()
 	FCanvasIcon KillsIcon;
@@ -268,6 +280,10 @@ protected:
 	/** Overlay shown when health is low. */
 	UPROPERTY()
 	UTexture2D* LowHealthOverlayTexture;
+
+	/** Overlay shown when hunger is low. */
+	UPROPERTY()
+	UTexture2D* LowHungerOverlayTexture;
 
 	/** Large font - used for ammo display etc. */
 	UPROPERTY()
@@ -325,6 +341,9 @@ protected:
 
 	/** Draw player's health bar. */
 	void DrawHealth();
+
+	/** Draw player's hunger bar. */
+	void DrawHunger();
 
 	/** Draws match timer and player position. */
 	void DrawMatchTimerAndPosition();
