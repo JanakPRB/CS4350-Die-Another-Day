@@ -63,7 +63,7 @@ void AShooterCharacter::PostInitializeComponents()
         StaminaMax = 100.f;
         StaminaCurrent = 100.f;
         HPReduceRate = 1.f;
-        HungerReduceRate = 1.f;
+        HungerReduceRate = 0.5f;
         StaminaReduceRate = 5.0f;
         StaminaRegenRate = 10.f;
         isHungry = false;
@@ -1035,7 +1035,7 @@ void AShooterCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if (bWantsToRunToggled && !IsRunning())
+	if (bWantsToRunToggled && !IsRunning() || StaminaCurrent == 0.0f)
 	{
 		SetRunning(false, false);
 	}
