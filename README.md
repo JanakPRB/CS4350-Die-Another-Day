@@ -7,4 +7,4 @@ How to launch the game:
 - In the repo directory of the project, right-click on ShooterGame.uproject and "Switch Unreal Engine Version" to the latest you installed.
 - Launch project with UE4, and on top of the scene window, build as Windows production release version
 
-2. Simply download the final build (Die Another Day.zip) from Google Drive shared link: . Extract to your desired directory as it is and launch ShooterGame.exe (If it is not working especially if you don't have UE4, find Engine\Extras\Redist\en-us and install UE4PrereqSetup_x64.exe)
+2. Simply download the final build (Die Another Day.zip) from Google Drive shared link: https://drive.google.com/open?id=0B_gqSnwBxne2dUZ3N3RTVUxucTQ . Extract to your desired directory as it is and launch ShooterGame.exe (If it is not working especially if you don't have UE4, find Engine\Extras\Redist\en-us and install UE4PrereqSetup_x64.exe)
